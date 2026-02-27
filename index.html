@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بطاقات معايدة عيد الفطر</title>
+    <!-- تحميل خطوط متنوعة -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=El+Messiri:wght@400;600;700&family=Lalezar&family=Reem+Kufi:wght@400;600&family=Scheherazade+New:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* شاشة كلمة السر */
+        .password-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #0a2f24, #051b14);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: all 0.5s ease;
+        }
+
+        .password-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .password-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1); }
+            50% { box-shadow: 0 20px 80px rgba(255, 215, 0, 0.3); }
+            100% { box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1); }
+        }
+
+        .password-box h2 {
+            color: #0a2f24;
+            font-size: 2em;
+            margin-bottom: 20px;
+            font-family: 'Amiri', serif;
+        }
+
+        .password-box .eid-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: swing 2s infinite;
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.5em;
+            text-align: center;
+            border: 3px solid #c9a959;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            font-family: 'Cairo', sans-serif;
+            letter-spacing: 5px;
+            background: #f9f9f9;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .password-input[type="number"]::-webkit-inner-spin-button,
+        .password-input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+        
+        .password-input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #8b6b3c;
+            box-shadow: 0 0 0 3px rgba(201, 169, 89, 0.3);
+        }
+
+        .password-btn {
+            background: linear-gradient(135deg, #0a2f24, #1a4f3a);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .password-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(10, 47, 36, 0.4);
+        }
+
+        .hint {
+            color: #666;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a2f24, #1a4f3a);
+            min-height: 100vh;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        body.visible {
+            opacity: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .input-field {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #c9a959;
+            box-shadow: 0 0 0 3px rgba(201, 169, 89, 0.2);
+        }
+
+        /* قسم اختيار الصور */
+        .image-selector {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 20px;
+            border: 2px dashed #c9a959;
+        }
+
+        .image-selector h3 {
+            color: #0a2f24;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .image-option {
+            position: relative;
+            cursor: pointer;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .image-option:hover {
+            transform: scale(1.05);
+            border-color: #c9a959;
+        }
+
+        .image-option.selected {
+            border-color: #0a2f24;
+            box-shadow: 0 0 0 3px #c9a959;
+        }
+
+        .image-option img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-option::after {
+            content: '✓';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 25px;
+            height: 25px;
+            background: #0a2f24;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1em;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .image-option.selected::after {
+            opacity: 1;
+        }
+
+        /* قسم اختيار الخط */
+        .font-selector {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 20px;
+            border: 2px dashed #c9a959;
+        }
+
+        .font-selector h3 {
+            color: #0a2f24;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        .fonts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .font-option {
+            padding: 15px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            font-size: 1.1em;
+        }
+
+        .font-option:hover {
+            border-color: #c9a959;
+            transform: translateY(-3px);
+        }
+
+        .font-option.selected {
+            border-color: #0a2f24;
+            background: #0a2f24;
+            color: white;
+        }
+
+        .font-option .sample {
+            font-size: 0.9em;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        /* أنماط الخطوط المتاحة */
+        .font-cairo { font-family: 'Cairo', sans-serif; }
+        .font-amiri { font-family: 'Amiri', serif; }
+        .font-tajawal { font-family: 'Tajawal', sans-serif; }
+        .font-messiri { font-family: 'El Messiri', sans-serif; }
+        .font-lalezar { font-family: 'Lalezar', cursive; }
+        .font-reem { font-family: 'Reem Kufi', sans-serif; }
+        .font-scheherazade { font-family: 'Scheherazade New', serif; }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0a2f24, #1a4f3a);
+            color: white;
+            box-shadow: 0 4px 15px rgba(10, 47, 36, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(10, 47, 36, 0.6);
+        }
+
+        .btn-danger {
+            background: #8b3c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #6b2c2c;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .card-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.4));
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 215, 0, 0.9);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #0a2f24;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b3c3c;
+            transition: all 0.3s ease;
+            z-index: 5;
+        }
+
+        .delete-btn:hover {
+            background: #8b3c3c;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 25px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #fff9e6, #ffffff);
+        }
+
+        .card-content .card-name {
+            font-size: 2em;
+            color: #0a2f24;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .card-message-line1 {
+            font-size: 1.3em;
+            color: #c9a959;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .card-message-line2 {
+            font-size: 1.6em;
+            color: #0a2f24;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .card-link-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #c9a959;
+        }
+
+        .card-link-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f5f5f5;
+            padding: 5px 5px 5px 15px;
+            border-radius: 50px;
+            border: 1px solid #c9a959;
+            margin-bottom: 8px;
+        }
+
+        .card-link-container input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-family: 'Cairo', sans-serif;
+            direction: ltr;
+            text-align: left;
+            font-size: 0.8em;
+            padding: 5px 0;
+        }
+
+        .card-link-container input:focus {
+            outline: none;
+        }
+
+        .card-copy-btn {
+            background: #0a2f24;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .card-copy-btn:hover {
+            background: #1a4f3a;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: white;
+        }
+
+        .empty-state div {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            z-index: 3000;
+            animation: slideUp 0.3s;
+            border: 2px solid #c9a959;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translate(-50%, 100%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        .font-info {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .form-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .images-grid, .fonts-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شاشة كلمة السر -->
+    <div id="passwordScreen" class="password-screen">
+        <div class="password-box">
+            <div class="eid-icon">🌙✨</div>
+            <h2>عيد فطر مبارك</h2>
+            <input type="number" id="passwordInput" class="password-input" maxlength="6" placeholder="******" oninput="if(this.value.length > 6) this.value = this.value.slice(0,6);" pattern="\d*" inputmode="numeric">
+            <button class="password-btn" onclick="checkPassword()">دخول</button>
+            <p class="hint">أدخل الرقم السري (أرقام فقط)</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🎉 بطاقات معايدة عيد الفطر 🎉</h1>
+            <p>اختر الصورة والخط المناسب وأنشئ بطاقات مخصصة لأحبابك</p>
+        </div>
+
+        <div class="form-section">
+            <div class="form-group">
+                <input type="text" id="nameInput" class="input-field" placeholder="أدخل الاسم (مثال: أحمد)" maxlength="30">
+            </div>
+            
+            <!-- اختيار الصور -->
+            <div class="image-selector">
+                <h3>🎨 اختر صورة المعايدة</h3>
+                <div class="images-grid" id="imagesGrid"></div>
+            </div>
+            
+            <!-- اختيار الخطوط -->
+            <div class="font-selector">
+                <h3>✍️ اختر نوع الخط</h3>
+                <div class="fonts-grid" id="fontsGrid"></div>
+            </div>
+            
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 20px;">
+                <button onclick="addCard()" class="btn btn-primary">➕ إنشاء بطاقة</button>
+                <button onclick="clearAllCards()" class="btn btn-danger">🗑️ مسح الكل</button>
+            </div>
+        </div>
+
+        <div id="cardsContainer" class="cards-grid"></div>
+
+        <div id="emptyState" class="empty-state">
+            <div>✨</div>
+            <h2>لا توجد بطاقات بعد</h2>
+            <p>اختر صورة وخط وأضف اسماً لتبدأ</p>
+        </div>
+    </div>
+
+    <script>
+        // التحقق من كلمة السر
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            if (/^\d+$/.test(password) && password === '527197') {
+                document.getElementById('passwordScreen').classList.add('hidden');
+                document.body.classList.add('visible');
+                loadCards();
+                showToast('✨ مرحباً بك ✨');
+            } else {
+                showToast('❌ كلمة السر خطأ');
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        // منع إدخال حروف في حقل كلمة السر
+        document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+            if (!/^\d$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Tab' && e.key !== 'Enter') {
+                e.preventDefault();
+            }
+        });
+
+        // السماح بالدخول بضغط Enter
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // مجموعة صور جميلة للمعايدة
+        const images = [
+            {
+                url: 'https://images.pexels.com/photos/5874650/pexels-photo-5874650.jpeg?auto=compress&cs=tinysrgb&w=600',
+                name: 'مسجد وفانوس'
+            },
+            {
+                url: 'https://images.pexels.com/photos/5874636/pexels-photo-5874636.jpeg?auto=compress&cs=tinysrgb&w=600',
+                name: 'هلال وفانوس'
+            },
+            {
+                url: 'https://images.pexels.com/photos/5874645/pexels-photo-5874645.jpeg?auto=compress&cs=tinysrgb&w=600',
+                name: 'فوانيس ملونة'
+            },
+            {
+                url: 'https://images.pexels.com/photos/5874670/pexels-photo-5874670.jpeg?auto=compress&cs=tinysrgb&w=600',
+                name: 'تمر وقهوة'
+            },
+            {
+                url: 'https://images.pexels.com/photos/5874622/pexels-photo-5874622.jpeg?auto=compress&cs=tinysrgb&w=600',
+                name: 'هلال ونجوم'
+            },
+            {
+                url: 'https://images.pexels.com/photos/5874655/pexels-photo-5874655.jpeg?auto=compress&cs=tinysrgb&w=600',
+                name: 'فانوس عربي'
+            },
+            {
+                url: 'https://images.pexels.com/photos/5874688/pexels-photo-5874688.jpeg?auto=compress&cs=tinysrgb&w=600',
+                name: 'زينة رمضان'
+            },
+            {
+                url: 'https://images.pexels.com/photos/5874648/pexels-photo-5874648.jpeg?auto=compress&cs=tinysrgb&w=600',
+                name: 'مسجد أزرق'
+            },
+            {
+                url: 'https://images.pexels.com/photos/5874666/pexels-photo-5874666.jpeg?auto=compress&cs=tinysrgb&w=600',
+                name: 'فوانيس ذهبية'
+            },
+            {
+                url: 'https://images.pexels.com/photos/4126710/pexels-photo-4126710.jpeg?auto=compress&cs=tinysrgb&w=600',
+                name: 'هلال ذهبي'
+            },
+            {
+                url: 'https://images.pexels.com/photos/4126709/pexels-photo-4126709.jpeg?auto=compress&cs=tinysrgb&w=600',
+                name: 'زينة عيد'
+            },
+            {
+                url: 'https://images.pexels.com/photos/4126715/pexels-photo-4126715.jpeg?auto=compress&cs=tinysrgb&w=600',
+                name: 'فانوس ليلي'
+            }
+        ];
+
+        // تعريف الخطوط المتاحة
+        const fonts = [
+            { name: 'الخط القاهره', class: 'font-cairo', family: 'Cairo' },
+            { name: 'خط المسيره', class: 'font-tajawal', family: 'Tajawal' },
+            { name: 'خط تجوال', class: 'font-amiri', family: 'Amiri' },
+            { name: 'خط شهرزاد', class: 'font-scheherazade', family: 'Scheherazade New' },
+            { name: 'الخط الكوفي', class: 'font-reem', family: 'Reem Kufi' },
+            { name: 'خط المصيري', class: 'font-messiri', family: 'El Messiri' },
+            { name: 'خط ليلزار', class: 'font-lalezar', family: 'Lalezar' }
+        ];
+
+        let cards = [];
+        let selectedImage = images[0].url; // الصورة الافتراضية
+        let selectedFont = fonts[0].class; // الخط الافتراضي
+        let selectedFontFamily = fonts[0].family;
+
+        // عرض الصور المتاحة
+        function renderImageSelector() {
+            const grid = document.getElementById('imagesGrid');
+            grid.innerHTML = images.map((img, index) => `
+                <div class="image-option ${index === 0 ? 'selected' : ''}" onclick="selectImage('${img.url}', this)">
+                    <img src="${img.url}" alt="${img.name}" loading="lazy">
+                </div>
+            `).join('');
+        }
+
+        // عرض الخطوط المتاحة
+        function renderFontSelector() {
+            const grid = document.getElementById('fontsGrid');
+            grid.innerHTML = fonts.map((font, index) => `
+                <div class="font-option ${index === 0 ? 'selected' : ''} ${font.class}" onclick="selectFont('${font.class}', '${font.family}', this)">
+                    <div>${font.name}</div>
+                    <div class="sample">كل عام وأنتم بخير</div>
+                </div>
+            `).join('');
+        }
+
+        // اختيار صورة
+        function selectImage(url, element) {
+            selectedImage = url;
+            document.querySelectorAll('.image-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        // اختيار خط
+        function selectFont(fontClass, fontFamily, element) {
+            selectedFont = fontClass;
+            selectedFontFamily = fontFamily;
+            document.querySelectorAll('.font-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        // تحميل البطاقات المحفوظة
+        function loadCards() {
+            const savedCards = localStorage.getItem('eidCards');
+            if (savedCards) {
+                try {
+                    cards = JSON.parse(savedCards);
+                } catch (e) {
+                    cards = [];
+                }
+            } else {
+                cards = [];
+            }
+            renderImageSelector();
+            renderFontSelector();
+            renderCards();
+        }
+
+        // حفظ البطاقات
+        function saveCards() {
+            localStorage.setItem('eidCards', JSON.stringify(cards));
+        }
+
+        // إضافة بطاقة جديدة
+        function addCard() {
+            const nameInput = document.getElementById('nameInput');
+            const name = nameInput.value.trim();
+            
+            if (name === '') {
+                showToast('الرجاء إدخال اسم');
+                return;
+            }
+
+            const id = Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            
+            cards.push({
+                id: id,
+                name: name,
+                image: selectedImage,
+                font: selectedFont,
+                fontFamily: selectedFontFamily,
+                date: new Date().toLocaleDateString('ar-EG')
+            });
+            
+            saveCards();
+            renderCards();
+            nameInput.value = '';
+            showToast(`تم إنشاء بطاقة لـ ${name}`);
+        }
+
+        // حذف بطاقة
+        function deleteCard(event, cardId) {
+            event.stopPropagation();
+            
+            if (confirm('هل أنت متأكد من حذف هذه البطاقة؟')) {
+                cards = cards.filter(card => card.id !== cardId);
+                saveCards();
+                renderCards();
+                showToast('تم حذف البطاقة');
+            }
+        }
+
+        // نسخ الرابط
+        function copyCardLink(button, link) {
+            navigator.clipboard.writeText(link).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'تم النسخ ✓';
+                button.style.background = '#c9a959';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#0a2f24';
+                }, 2000);
+                showToast('تم نسخ الرابط');
+            }).catch(() => {
+                showToast('فشل النسخ');
+            });
+        }
+
+        // عرض البطاقات
+        function renderCards() {
+            const container = document.getElementById('cardsContainer');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (cards.length === 0) {
+                container.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            
+            const baseUrl = window.location.href.split('?')[0].split('#')[0];
+            
+            container.innerHTML = cards.map(card => {
+                const shareUrl = baseUrl + '?card=' + encodeURIComponent(card.id);
+                return `
+                <div class="card">
+                    <div class="card-image" style="background-image: url('${card.image}')">
+                        <span class="card-badge">${card.date}</span>
+                        <button class="delete-btn" onclick="deleteCard(event, '${card.id}')" title="حذف">✕</button>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-name" style="font-family: ${card.fontFamily}">${card.name}</div>
+                        <div class="card-message-line1" style="font-family: ${card.fontFamily}">كل عام وأنتم بخير</div>
+                        <div class="card-message-line2" style="font-family: ${card.fontFamily}">عيد فطر سعيد</div>
+                        
+                        <div class="card-link-section">
+                            <div class="card-link-container">
+                                <input type="text" value="${shareUrl}" readonly onclick="this.select()">
+                                <button class="card-copy-btn" onclick="copyCardLink(this, '${shareUrl}')">نسخ</button>
+                            </div>
+                            <div class="font-info" style="font-family: ${card.fontFamily}">الخط: ${card.fontFamily}</div>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        // مسح كل البطاقات
+        function clearAllCards() {
+            if (cards.length === 0) {
+                showToast('لا توجد بطاقات');
+                return;
+            }
+            
+            if (confirm('هل أنت متأكد من حذف جميع البطاقات؟')) {
+                cards = [];
+                saveCards();
+                renderCards();
+                showToast('تم حذف الكل');
+            }
+        }
+
+        // عرض رسالة
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
